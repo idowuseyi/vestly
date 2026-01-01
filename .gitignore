@@ -26,6 +26,8 @@ coverage/
 
 # IDE
 .vscode/
+implementation.md
+prompt.md
 .idea/
 *.swp
 *.swo
