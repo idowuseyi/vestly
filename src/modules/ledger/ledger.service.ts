@@ -11,6 +11,7 @@ import {
 } from './ledger.schema';
 import { AuthenticatedRequest, TransactionType } from '../../shared/types';
 import { applyOrgScope } from '../../shared/scoping.util';
+import { NotFoundError, ForbiddenError, BadRequestError } from '../../shared/errors.util';
 
 export class LedgerService {
   /**
@@ -76,7 +77,7 @@ export class LedgerService {
     const tenant = await Tenant.findOne(tenantQuery);
 
     if (!tenant) {
-      throw new Error('Tenant not found');
+      throw new NotFoundError('Tenant not found');
     }
 
     const transaction = await OwnershipCreditTransaction.create({
@@ -104,7 +105,7 @@ export class LedgerService {
     const tenant = await Tenant.findOne(tenantQuery);
 
     if (!tenant) {
-      throw new Error('Tenant not found');
+      throw new NotFoundError('Tenant not found');
     }
 
     const transaction = await OwnershipCreditTransaction.create({
@@ -132,15 +133,15 @@ export class LedgerService {
     const tenant = await Tenant.findOne(tenantQuery);
 
     if (!tenant) {
-      throw new Error('Tenant not found');
+      throw new NotFoundError('Tenant not found');
     }
 
     // CRITICAL: Check balance before redemption
     const currentBalance = await this.calculateBalanceAggregation(tenantId, req);
 
     if (currentBalance < input.amount) {
-      throw new Error(
-        `Insufficient balance. Current balance: ${currentBalance}, Redemption amount: ${input.amount}`
+      throw new BadRequestError(
+        `Insufficient balance. Current: ${currentBalance}, Requested: ${input.amount}`
       );
     }
 
@@ -172,7 +173,7 @@ export class LedgerService {
       const tenant = await Tenant.findOne(tenantQuery);
 
       if (!tenant || tenant._id.toString() !== tenantId) {
-        throw new Error('Access denied: Tenants can only view their own ledger');
+        throw new ForbiddenError('Access denied: Tenants can only view their own ledger');
       }
     }
 
@@ -208,7 +209,7 @@ export class LedgerService {
       const tenant = await Tenant.findOne(tenantQuery);
 
       if (!tenant || tenant._id.toString() !== tenantId) {
-        throw new Error('Access denied: Tenants can only view their own balance');
+        throw new ForbiddenError('Access denied: Tenants can only view their own balance');
       }
     }
 

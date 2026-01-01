@@ -14,6 +14,12 @@ export const errorHandler = (
 ): void => {
   console.error('Error:', err);
 
+  // Custom HTTP errors
+  if ('statusCode' in err && typeof (err as any).statusCode === 'number') {
+    ResponseUtil.error(res, err.message, (err as any).statusCode);
+    return;
+  }
+
   // Mongoose validation error
   if (err.name === 'ValidationError') {
     ResponseUtil.badRequest(res, err.message);

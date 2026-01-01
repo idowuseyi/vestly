@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { User, IUser } from './auth.model';
 import { RegisterInput, LoginInput } from './auth.schema';
 import { config } from '../../config/env';
+import { UnauthorizedError, ConflictError } from '../../shared/errors.util';
 
 export class AuthService {
   /**
@@ -11,7 +12,7 @@ export class AuthService {
     // Check if user already exists
     const existingUser = await User.findOne({ email: input.email });
     if (existingUser) {
-      throw new Error('User with this email already exists');
+      throw new ConflictError('User with this email already exists');
     }
 
     // Create new user
@@ -30,13 +31,13 @@ export class AuthService {
     // Find user by email
     const user = await User.findOne({ email: input.email });
     if (!user) {
-      throw new Error('Invalid email or password');
+      throw new UnauthorizedError('Invalid email or password');
     }
 
     // Verify password
     const isPasswordValid = await user.comparePassword(input.password);
     if (!isPasswordValid) {
-      throw new Error('Invalid email or password');
+      throw new UnauthorizedError('Invalid email or password');
     }
 
     // Generate JWT token

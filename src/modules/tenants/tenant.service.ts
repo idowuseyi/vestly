@@ -1,6 +1,7 @@
 import { Tenant, ITenant } from './tenant.model';
 import { Unit } from '../units/unit.model';
 import { CreateTenantInput } from './tenant.schema';
+import { NotFoundError } from '../../shared/errors.util';
 import { AuthenticatedRequest } from '../../shared/types';
 import { applyOrgScope } from '../../shared/scoping.util';
 
@@ -18,7 +19,7 @@ export class TenantService {
     const unit = await Unit.findOne(unitQuery);
 
     if (!unit) {
-      throw new Error('Unit not found');
+      throw new NotFoundError('Unit not found');
     }
 
     const tenantData = {

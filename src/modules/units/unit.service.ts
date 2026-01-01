@@ -1,6 +1,7 @@
 import { Unit, IUnit } from './unit.model';
 import { Property } from '../properties/property.model';
 import { CreateUnitInput, UpdateUnitInput } from './unit.schema';
+import { NotFoundError } from '../../shared/errors.util';
 import { AuthenticatedRequest } from '../../shared/types';
 import { applyOrgScope } from '../../shared/scoping.util';
 
@@ -18,7 +19,7 @@ export class UnitService {
     const property = await Property.findOne(propertyQuery);
 
     if (!property) {
-      throw new Error('Property not found');
+      throw new NotFoundError('Property not found');
     }
 
     const unitData = {
