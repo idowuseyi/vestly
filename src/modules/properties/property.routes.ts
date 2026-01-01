@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { PropertyController } from './property.controller';
+import { UnitController } from '../units/unit.controller';
 import { authenticate } from '../../middleware/auth.middleware';
 import { requireLandlordOrAdmin } from '../../middleware/roleGuard.middleware';
 import { validateBody, validateParams, validateQuery } from '../../middleware/validate.middleware';
@@ -9,6 +10,7 @@ import {
   propertyIdSchema,
   propertyQuerySchema,
 } from './property.schema';
+import { createUnitSchema, propertyIdParamSchema } from '../units/unit.schema';
 
 const router = Router();
 
@@ -47,6 +49,21 @@ router.delete(
   requireLandlordOrAdmin,
   validateParams(propertyIdSchema),
   PropertyController.delete
+);
+
+// Nested unit routes for properties
+router.post(
+  '/:id/units',
+  requireLandlordOrAdmin,
+  validateParams(propertyIdParamSchema),
+  validateBody(createUnitSchema),
+  UnitController.create
+);
+
+router.get(
+  '/:id/units',
+  validateParams(propertyIdParamSchema),
+  UnitController.getByProperty
 );
 
 export default router;

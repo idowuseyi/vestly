@@ -19,6 +19,9 @@ import valuationRoutes from './modules/valuation/valuation.routes';
 
 const app: Application = express();
 
+// Trust first proxy (for production deployment behind reverse proxies)
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet());
 app.use(cors());
@@ -97,8 +100,8 @@ app.get('/health', (_req, res) => {
 const apiRouter = express.Router();
 
 apiRouter.use('/auth', authRoutes);
-apiRouter.use('/', propertyRoutes);
-apiRouter.use('/', unitRoutes);
+apiRouter.use('/properties', propertyRoutes);
+apiRouter.use('/units', unitRoutes);
 apiRouter.use('/', tenantRoutes);
 apiRouter.use('/', ledgerRoutes);
 apiRouter.use('/', valuationRoutes);
