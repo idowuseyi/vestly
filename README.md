@@ -283,17 +283,19 @@ kill -9 <PID>
 
 ## 📝 Environment Variables
 
-| Variable         | Description                           | Default       |
-| ---------------- | ------------------------------------- | ------------- |
-| `NODE_ENV`       | Environment mode                      | `development` |
-| `PORT`           | Server port                           | `8080`        |
-| `MONGODB_URI`    | MongoDB connection string             | Required      |
-| `REDIS_HOST`     | Redis host                            | `localhost`   |
-| `REDIS_PORT`     | Redis port                            | `6379`        |
-| `JWT_SECRET`     | JWT signing secret (min 32 chars)     | Required      |
-| `JWT_EXPIRES_IN` | Token expiration                      | `24h`         |
-| `AUTH_MODE`      | Authentication mode (`jwt` or `stub`) | `jwt`         |
-| `API_VERSION`    | API version prefix                    | `v1`          |
+| Variable           | Description                           | Default       |
+| ------------------ | ------------------------------------- | ------------- |
+| `NODE_ENV`         | Environment mode                      | `development` |
+| `PORT`             | Server port                           | `8080`        |
+| `MONGODB_URI`      | MongoDB connection string             | Required      |
+| `REDIS_HOST`       | Redis host                            | `localhost`   |
+| `REDIS_PORT`       | Redis port                            | `6379`        |
+| `JWT_SECRET`       | JWT signing secret (min 32 chars)     | Required      |
+| `JWT_EXPIRES_IN`   | Token expiration                      | `24h`         |
+| `AUTH_MODE`        | Authentication mode (`jwt` or `stub`) | `jwt`         |
+| `API_VERSION`      | API version prefix                    | `v1`          |
+| `SWAGGER_USERNAME` | Swagger UI username (optional)        | -             |
+| `SWAGGER_PASSWORD` | Swagger UI password (optional)        | -             |
 
 ## 🤝 Contributing
 

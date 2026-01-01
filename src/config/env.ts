@@ -18,6 +18,8 @@ const envSchema = z.object({
   RATE_LIMIT_WINDOW_MS: z.string().default('900000'),
   RATE_LIMIT_MAX_REQUESTS: z.string().default('100'),
   LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']).default('info'),
+  SWAGGER_USERNAME: z.string().optional(),
+  SWAGGER_PASSWORD: z.string().optional(),
 });
 
 type EnvConfig = z.infer<typeof envSchema>;
@@ -65,6 +67,10 @@ export const config = {
   },
   logging: {
     level: env.LOG_LEVEL,
+  },
+  swagger: {
+    username: env.SWAGGER_USERNAME,
+    password: env.SWAGGER_PASSWORD,
   },
   isProduction: env.NODE_ENV === 'production',
   isDevelopment: env.NODE_ENV === 'development',

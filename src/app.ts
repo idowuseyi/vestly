@@ -7,6 +7,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { config } from './config/env';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
+import { swaggerBasicAuth } from './middleware/swaggerAuth.middleware';
 
 // Import routes
 import authRoutes from './modules/auth/auth.routes';
@@ -81,7 +82,7 @@ const swaggerOptions: swaggerJsdoc.Options = {
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerBasicAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Health check endpoint
 app.get('/health', (_req, res) => {
