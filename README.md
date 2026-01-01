@@ -318,7 +318,7 @@ This project is licensed under the MIT License.
 
 ## 💡 If I had more time…
 
-This section outlines potential improvements, new features, and enhancements that would make the system more robust, scalable, and feature-rich.
+This section outlines potential improvements, new features, and enhancements that I would have liked to implement if I had more time. These would make the system more robust, scalable, and feature-rich.
 
 ### 🔔 Notifications & Communication
 
